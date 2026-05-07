@@ -1,10 +1,19 @@
 const express = require('express');
+const helmet = require("helmet")
 const cors = require('cors');
 const { chromium } = require('playwright');
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: "*", allowedHeaders: "*" }));
 app.use(express.json())
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            "default-src": ["'self'"],
+            "img-src": ["'self'", "data:"],
+        },
+    })
+);
 
 // Passamos a usar o 'context' que contém a identidade falsa do navegador
 async function buscarMercadoLivre(produto, context) {
