@@ -27,9 +27,8 @@ async function buscarMercadoLivre(produto, context) {
         await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
 
         // Espera um segundinho para dar tempo dos scripts da página carregarem
-        // await page.(1000);
+        await page.waitForTimeout(1000);
         // em vez de waitForTimeout
-        await page.waitForSelector('.ui-search-layout__item', { timeout: 10000 });
 
         const cards = await page.locator('.ui-search-layout__item').all();
 
@@ -70,9 +69,9 @@ async function buscarAmazon(produto, context) {
         await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
 
         // Pausa um pouco maior para garantir a renderização de elementos dinâmicos
-        // await page.waitForTimeout(2000);
+        await page.waitForTimeout(1400);
         // em vez de waitForTimeout
-        await page.waitForSelector('.ui-search-layout__item', { timeout: 10000 });
+        // await page.waitForSelector('.ui-search-layout__item', { timeout: 10000 });
 
         const isCaptcha = await page.locator('form[action="/errors/validateCaptcha"]').count();
         if (isCaptcha > 0) {
